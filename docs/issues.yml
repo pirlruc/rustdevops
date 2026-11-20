@@ -1,0 +1,33 @@
+milestones:
+  - name: Foundation
+    epics:
+      - id: RDO-001
+        status: done
+        title: Publish Rust quality and Tauri build workflows
+        overview:
+          problem: >-
+            A Rust or Tauri repository has no shared workflow for fmt,
+            clippy, coverage, audit, deny, or a Linux bundle.
+          goal: >-
+            rust-quality and tauri-build cover those checks. Signing is
+            an input and stays off until a key is provided.
+        decision: >-
+          In the context of a Rust desktop build, facing copied CI jobs,
+          we decided two reusable workflows, to achieve one pin for
+          quality and one pin for the Linux bundle, accepting that
+          Windows and macOS stay inputs for a later release.
+        acceptance_criteria:
+          - rust-quality runs fmt, clippy, llvm-cov, cargo-audit, and cargo-deny
+          - tauri-build produces a Linux bundle and uploads it
+          - Signing fails closed when the input is true and the key secret is empty
+        tasks:
+          - id: RDO-001-T1
+            status: done
+            title: Add the workflows
+            instructions:
+              files:
+                - .github/workflows/rust-quality.yml
+                - .github/workflows/tauri-build.yml
+            verification:
+              - actionlint .github/workflows/rust-quality.yml
+              - actionlint .github/workflows/tauri-build.yml

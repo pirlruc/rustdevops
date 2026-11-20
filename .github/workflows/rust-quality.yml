@@ -1,0 +1,85 @@
+name: Rust quality
+
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        description: Directory that contains Cargo.toml
+        type: string
+        default: .
+        required: false
+      coverage_lines:
+        description: Minimum line coverage for cargo-llvm-cov
+        type: number
+        default: 95
+        required: false
+      devops_ref:
+        description: Commit or tag of this repo matching the uses pin (CI-034)
+        type: string
+        default: ""
+        required: false
+    secrets:
+      checkout_token:
+        description: Optional token when this repository is private
+        required: false
+
+permissions: {}
+
+concurrency:
+  group: rust-quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+    steps:
+      - name: Check out the caller
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Require devops_ref for cross-repo callers
+        env:
+          REF: ${{ inputs.devops_ref }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [ "${REPO}" != "pirlruc/rustdevops" ] && [ -z "${REF}" ]; then
+            echo "CI-034: pass devops_ref equal to the uses pin" >&2
+            exit 1
+          fi
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca
+        with:
+          toolchain: 1.85.0
+          components: rustfmt, clippy, llvm-tools-preview
+
+      - name: Install cargo tools
+        run: |
+          cargo install cargo-llvm-cov --version 0.6.16 --locked
+          cargo install cargo-audit --version 0.21.2 --locked
+          cargo install cargo-deny --version 0.18.2 --locked
+
+      - name: Format
+        run: cargo fmt --check
+
+      - name: Clippy
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Test with coverage
+        env:
+          LINES: ${{ inputs.coverage_lines }}
+        run: cargo llvm-cov --fail-under-lines "${LINES}"
+
+      - name: Audit
+        run: cargo audit
+
+      - name: Deny
+        run: cargo deny check
