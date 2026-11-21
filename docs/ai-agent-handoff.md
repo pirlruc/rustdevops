@@ -25,4 +25,6 @@ sh scripts/check-ci-local.sh
 
 `tauri-build` 1.0.1 (`a0d4a6e64467818739f4e863638f505315816989`) installs `libxdo-dev`. Without it the Linux bundle fails with `cannot find -lxdo`. Callers pin that commit for both `rust-quality` and `tauri-build`, and pass the same value as `devops_ref`.
 
+`ci.yml` infra-lint must grant `packages: read`. The reusable workflow declares that permission (CI-028). A caller that grants only `contents: read` fails at startup with no jobs.
+
 *Last updated: 2026-11-21 — 1.0.1 installs libxdo for the Linux Tauri link.*

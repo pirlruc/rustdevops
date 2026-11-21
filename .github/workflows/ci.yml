@@ -16,6 +16,7 @@ jobs:
   infra-lint:
     permissions:
       contents: read
+      packages: read
     uses: pirlruc/commondevops/.github/workflows/common-infra-lint.yml@0e78652fa9f65b9d98033ac82bf9e5308ebb17a7
     with:
       blocking: true
