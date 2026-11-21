@@ -23,4 +23,6 @@ sh scripts/check-ci-local.sh
 
 `cargo install` of llvm-cov, audit, and deny is pinned by version and runs on the GitHub runner. There is no Rust pack yet, so the coverage input defaults to 95 lines. Windows, macOS, and updater signing stay inputs on `tauri-build`.
 
-*Last updated: 2026-11-20 — initial rust-quality and tauri-build workflows.*
+`tauri-build` 1.0.1 (`a0d4a6e64467818739f4e863638f505315816989`) installs `libxdo-dev`. Without it the Linux bundle fails with `cannot find -lxdo`. Callers pin that commit for both `rust-quality` and `tauri-build`, and pass the same value as `devops_ref`.
+
+*Last updated: 2026-11-21 — 1.0.1 installs libxdo for the Linux Tauri link.*
