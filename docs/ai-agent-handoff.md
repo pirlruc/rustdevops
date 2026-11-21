@@ -21,7 +21,7 @@ sh scripts/check-ci-local.sh
 
 ## Known pitfalls
 
-`cargo install` of llvm-cov, audit, and deny is pinned by version and runs on the GitHub runner. There is no Rust pack yet, so the coverage input defaults to 95 lines. Windows, macOS, and updater signing stay inputs on `tauri-build`. cargo-audit is 0.23.0. 0.21.2 cannot parse current advisory-db entries such as RUSTSEC-2026-0245 and fails before it reports findings.
+`cargo install` of llvm-cov, audit, and deny is pinned by version and runs on the GitHub runner. There is no Rust pack yet, so the coverage input defaults to 95 lines. Windows, macOS, and updater signing stay inputs on `tauri-build`. cargo-audit is 0.23.0 and is installed with rustc 1.88. The project toolchain stays 1.85. 0.21.2 cannot parse current advisory-db entries such as RUSTSEC-2026-0245, and 0.23.0 does not build with rustc 1.85.
 
 `tauri-build` 1.0.1 installs `libxdo-dev`. Without it the Linux bundle fails with `cannot find -lxdo`.
 

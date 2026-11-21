@@ -64,8 +64,10 @@ jobs:
       - name: Install cargo tools
         run: |
           cargo install cargo-llvm-cov --version 0.6.16 --locked
-          cargo install cargo-audit --version 0.23.0 --locked
           cargo install cargo-deny --version 0.18.2 --locked
+          # cargo-audit 0.23 needs rustc 1.88. The project toolchain stays 1.85.
+          rustup toolchain install 1.88.0 --profile minimal
+          cargo +1.88.0 install cargo-audit --version 0.23.0 --locked
 
       - name: Format
         run: cargo fmt --check
