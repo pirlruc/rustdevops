@@ -90,7 +90,7 @@ jobs:
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca
         with:
-          toolchain: 1.85.0
+          toolchain: 1.89.0
 
       - name: Install frontend dependencies
         working-directory: ${{ inputs.frontend_directory }}
