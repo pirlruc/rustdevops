@@ -1,14 +1,21 @@
 version: 2
+
+multi-ecosystem-groups:
+  all-dependencies:
+    schedule:
+      interval: monthly
+      time: "06:00"
+      timezone: Europe/Lisbon
+    commit-message:
+      prefix: build
+      include: scope
+
 updates:
   - package-ecosystem: github-actions
     directory: /
-    schedule:
-      interval: monthly
-  - package-ecosystem: docker
-    directory: /
-    schedule:
-      interval: monthly
+    patterns: ["*"]
+    multi-ecosystem-group: all-dependencies
   - package-ecosystem: gitsubmodule
     directory: /
-    schedule:
-      interval: monthly
+    patterns: ["*"]
+    multi-ecosystem-group: all-dependencies

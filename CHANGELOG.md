@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `ci.yml` runs doc verification, scaffold verification, secret scanning, and Scorecard.
+- Dependabot updates are one multi-ecosystem group.
+
+### Removed
+
+- The unused Dockerfile. Workflows install Rust 1.89.0 with `dtolnay/rust-toolchain`.
+
+### Changed
+
+- `docs/guardrails` is 1.17.0 and `.github/scaffold` is 1.14.0.
+- `checkout_token` is passed to the caller checkout.
+
 ## [1.0.0] - 2026-11-20
 
 ### Added

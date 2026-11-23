@@ -20,9 +20,9 @@ if command -v shellcheck >/dev/null 2>&1; then
 	shellcheck scripts/*.sh
 fi
 
-if command -v hadolint >/dev/null 2>&1; then
-	echo "==> hadolint"
-	hadolint Dockerfile
+if command -v docker >/dev/null 2>&1; then
+	echo "==> docker scans"
+	sh scripts/check-ci-docker.sh
 fi
 
 echo "check-ci-local: ok"

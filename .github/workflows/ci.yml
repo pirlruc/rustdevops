@@ -33,3 +33,58 @@ jobs:
     with:
       pin_script: scripts/check-submodule-pins.sh
       scripts_ref: 0e78652fa9f65b9d98033ac82bf9e5308ebb17a7
+
+  docs:
+    permissions:
+      contents: read
+    uses: pirlruc/commondevops/.github/workflows/common-doc-verify.yml@1c621c43fa1bee2613ab4996135f85d0c55d59fb
+    with:
+      blocking: true
+      shell_scripts: scripts/*.sh
+      yaml_files: docs/issues.yml docs/guardrail-deviations.yml .github/dependabot.yml
+      yaml_globs: .github/workflows/*.yml
+      run_link_lint: true
+      run_hygiene: true
+      scripts_ref: 1c621c43fa1bee2613ab4996135f85d0c55d59fb
+    secrets:
+      checkout_token: ${{ secrets.COMMONDEVOPS_READ_TOKEN }}
+
+  scaffold:
+    permissions:
+      contents: read
+      issues: read
+    uses: pirlruc/commondevops/.github/workflows/common-scaffold-verify.yml@1c621c43fa1bee2613ab4996135f85d0c55d59fb
+    with:
+      blocking: true
+      scripts_ref: 1c621c43fa1bee2613ab4996135f85d0c55d59fb
+    secrets:
+      checkout_token: ${{ secrets.COMMONDEVOPS_READ_TOKEN }}
+      packs_token: ${{ secrets.GUARDRAILS_READ_TOKEN }}
+
+  secrets-sast:
+    if: github.event.pull_request.user.login != 'dependabot[bot]'
+    permissions:
+      contents: read
+      packages: read
+    uses: pirlruc/commondevops/.github/workflows/common-secrets-sast.yml@1c621c43fa1bee2613ab4996135f85d0c55d59fb
+    with:
+      blocking: true
+      working_directory: .
+      scripts_ref: 1c621c43fa1bee2613ab4996135f85d0c55d59fb
+      container_image: ghcr.io/pirlruc/ci-lint@sha256:e0f48be58460a9eeb3adcc8c7c4c3592db0318dbe4de9c90c1b4b9e863898f6c
+
+  scorecard:
+    if: >-
+      github.event.pull_request.user.login != 'dependabot[bot]' &&
+      github.event.repository.fork == false
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+      id-token: write
+    uses: pirlruc/commondevops/.github/workflows/common-scorecard.yml@1c621c43fa1bee2613ab4996135f85d0c55d59fb
+    with:
+      blocking: false
+      publish_results: false
+    secrets:
+      repo_token: ${{ secrets.SCORECARD_TOKEN }}
