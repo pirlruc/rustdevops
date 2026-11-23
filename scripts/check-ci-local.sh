@@ -2,7 +2,7 @@
 # Local parity for the workflow lint this repository runs on GitHub.
 set -eu
 
-ROOT="$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)"
+ROOT="$(CDPATH='' cd -- "$(dirname "$0")/.." && pwd)"
 cd "${ROOT}"
 
 echo "==> submodule pins"
