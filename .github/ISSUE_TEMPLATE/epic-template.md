@@ -13,15 +13,12 @@ assignees: ''
 
 **Problem:**
 
-
 **Goal:**
-
 
 ## Decision (Y-statement)
 
 <!-- Required on every new Epic. Do not delete this section. Do not rewrite an existing Epic only to add it. -->
 <!-- Format: In the context of <use case>, facing <concern>, we decided <option>, to achieve <benefit>, accepting <trade-off>. -->
-
 
 ## Out of Scope
 
@@ -47,12 +44,11 @@ Field definitions: https://github.com/pirlruc/guardrails#deviation-rule
 
 <!-- List the Guardrail IDs this epic authorizes a deviation for, or delete this section. -->
 
-
 ## References
 
 <!-- Guardrail IDs, related epics, legacy source_adr IDs, methodology tag — not task verification commands -->
 <!-- Example: CPP-TEST-003, CPP-DOC-001 — https://github.com/pirlruc/guardrails -->
-<!-- Methodology: https://github.com/pirlruc/methodologies/tree/1.11.0/github-issue-adr -->
+<!-- Methodology: https://github.com/pirlruc/methodologies/tree/1.12.1/github-issue-adr -->
 
 ## Epic Acceptance Criteria
 

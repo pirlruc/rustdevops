@@ -33,3 +33,44 @@ jobs:
     with:
       pin_script: scripts/check-submodule-pins.sh
       scripts_ref: 0e78652fa9f65b9d98033ac82bf9e5308ebb17a7
+
+  docs:
+    permissions:
+      contents: read
+    uses: pirlruc/commondevops/.github/workflows/common-doc-verify.yml@1c621c43fa1bee2613ab4996135f85d0c55d59fb
+    with:
+      blocking: true
+      shell_scripts: scripts/*.sh
+      run_link_lint: true
+      run_hygiene: true
+      scripts_ref: 1c621c43fa1bee2613ab4996135f85d0c55d59fb
+
+  secrets-sast:
+    if: github.event.pull_request.user.login != 'dependabot[bot]'
+    permissions:
+      contents: read
+      packages: read
+    uses: pirlruc/commondevops/.github/workflows/common-secrets-sast.yml@1c621c43fa1bee2613ab4996135f85d0c55d59fb
+    with:
+      blocking: true
+      working_directory: .
+      scripts_ref: 1c621c43fa1bee2613ab4996135f85d0c55d59fb
+      container_image: ghcr.io/catthehacker/ubuntu:act-24.04@sha256:dff4ec57d90046a7283aafc314298380be82bfeccb9ad0f1b36c4ebe74aabe78
+      install_runner_packages: true
+      mount_runner_git: false
+
+  scorecard:
+    if: >-
+      github.event.pull_request.user.login != 'dependabot[bot]' &&
+      github.event.repository.fork == false
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+      id-token: write
+    uses: pirlruc/commondevops/.github/workflows/common-scorecard.yml@1c621c43fa1bee2613ab4996135f85d0c55d59fb
+    with:
+      blocking: false
+      publish_results: false
+    secrets:
+      repo_token: ${{ secrets.SCORECARD_TOKEN }}

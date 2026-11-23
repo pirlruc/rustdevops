@@ -14,8 +14,8 @@ jobs:
       devops_ref: 1.0.0
 ```
 
-The CI image starts from digest-pinned Rust 1.85 slim and copies a digest-pinned Node 24. It runs as uid 10001. WebKit libraries for a Tauri bundle are installed on the GitHub runner, not in that image.
+The toolchain is Rust 1.89.0, installed by `dtolnay/rust-toolchain` in `rust-quality.yml` and `tauri-build.yml`. WebKit libraries for a Tauri bundle are installed on the GitHub runner.
 
 ## Documentation
 
-- [Handoff](docs/ai-agent-handoff.md)
+- [Workflows](docs/workflows.md)
