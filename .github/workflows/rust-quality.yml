@@ -57,7 +57,7 @@ jobs:
           fi
 
       - name: Set up Rust
-        uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca
+        uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca # 1.89.0
         with:
           toolchain: 1.89.0
           components: rustfmt, clippy, llvm-tools-preview

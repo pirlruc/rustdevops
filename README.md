@@ -9,9 +9,9 @@ jobs:
   rust-quality:
     permissions:
       contents: read
-    uses: pirlruc/rustdevops/.github/workflows/rust-quality.yml@1.0.0
+    uses: pirlruc/rustdevops/.github/workflows/rust-quality.yml@1.2.0
     with:
-      devops_ref: 1.0.0
+      devops_ref: 1.2.0
 ```
 
 The toolchain is Rust 1.89.0, installed by `dtolnay/rust-toolchain` in `rust-quality.yml` and `tauri-build.yml`. WebKit libraries for a Tauri bundle are installed on the GitHub runner.

@@ -20,6 +20,17 @@ updates:
   - package-ecosystem: gitsubmodule
     directory: /
     patterns: ["*"]
-    multi-ecosystem-group: all-dependencies
+    schedule:
+      interval: monthly
+      time: "06:00"
+      timezone: Europe/Lisbon
     cooldown:
       default-days: 7
+
+# Uncomment after the DEPENDABOT_GITHUB_TOKEN Dependabot secret exists.
+# registries:
+#   github-private:
+#     type: git
+#     url: https://github.com
+#     username: x-access-token
+#     password: ${{ secrets.DEPENDABOT_GITHUB_TOKEN }}
