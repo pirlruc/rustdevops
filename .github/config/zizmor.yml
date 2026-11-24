@@ -1,0 +1,7 @@
+# zizmor flags workspace-relative uses: ./... (self-repository).
+# GitHub accepts uses: $/..., and actionlint 1.7.12 rejects that form.
+# A workflow_call in this repository has to stay on the relative path.
+rules:
+  self-repository:
+    ignore:
+      - ci.yml
