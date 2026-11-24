@@ -78,6 +78,8 @@ jobs:
   smoke:
     permissions:
       contents: read
+    # Local reusable workflow. GitHub requires ./ for workflow_call.
+    # zizmor: ignore[self-repository]
     uses: ./.github/workflows/rust-quality.yml
     with:
       working_directory: fixtures/smoke
